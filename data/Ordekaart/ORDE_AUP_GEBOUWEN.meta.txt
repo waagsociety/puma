@@ -1,0 +1,31 @@
+Kaartlaag	ORDE_AUP_GEBOUWEN 
+Attributen	
+Objectnummer
+Gebied
+Locatie
+Bouwjaar
+Architect
+Functie
+Gebouwtypologie
+Bouwlagen
+Woningaantal
+Vernieuwbouw
+Bouwsysteem
+Waardering_A
+Waardering_B
+Waardering_C
+Waardering_D
+Waardering_totaal
+Orde
+Aantal objecten	1233 
+Actualiteit	Vastgesteld en in boekvorm uitgegeven Oktober 2013 
+Lees de Toelichting bij	http://maps.amsterdam.nl/ordekaart_aup 
+ 	 
+Bronhouder	
+Dienst	Gemeente Amsterdam - Monumenten en Archeologie 
+Naam	Jouke van der Werf 
+Email	j.vanderwerf@amsterdam.nl 
+Website	http://maps.amsterdam.nl/open_geodata/
+Datum	23 augustus 2016
+ 	 
+	 
