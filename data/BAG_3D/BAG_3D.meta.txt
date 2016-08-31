@@ -1,10 +1,18 @@
 Beschrijving:
+
+The Amsterdam BAG-3D dataset is based on two sources:
+- Function, area and year of construction of buildings from Basisregistratie Adressen en Gebouwen (BAG), maintained and published by The Netherlands’ Cadastre, Land Registry and Mapping Agency – in short Kadaster.
+- Height of the building from Actueel Hoogtebestand Nederland (AHN), maintained and published by Waterschappen, Rijkswaterstaat en Provincies.
+Both are accessible via https://www.pdok.nl/.
+ESRI has made available BAG-3D dataset, which combines BAG and AHN. Maarten van 't Zelfde, Intitute of Environmental Sciences, Leiden Unversity, has extracted from BAG-3D the data for Amsterdam, using ArcGIS 10.2. 
+
+The data are used in the PUMA project, coordinator Ester van der Voet, Intitute of Environmental Sciences, Leiden Unversity. Job Spierings and Ruben Huele are working on a visualisation of the data.
+
+
 Licentie: Public domain?
 Website:
 Datum/versie:
 Bewerkingen:
 Bewerker: R. Huele
-
 Bronhouder	
-Dienst	Gemeente Amsterdam - Monumenten en Archeologie 
 Naam	
