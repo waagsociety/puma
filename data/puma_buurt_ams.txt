@@ -1,0 +1,108 @@
+puma=# select  gid,
+puma-#         bu_naam,
+puma-#         gm_naam,
+puma-#         (select sum(steel_kg_min_sum) from puma.panden p where ST_Contains(ST_Transform(b.geom,4326), p.geom)) AS steel_kg_min,
+puma-#         (select sum(steel_kg_max_sum) from puma.panden p where ST_Contains(ST_Transform(b.geom,4326), p.geom)) AS steel_kg_max,
+puma-#         (select sum(copper_kg_min_sum) from puma.panden p where ST_Contains(ST_Transform(b.geom,4326), p.geom)) AS copper_kg_min,         (select sum(copper_kg_min_sum) from puma.panden p where ST_Contains(ST_Transform(b.geom,4326), p.geom)) AS copper_kg_max
+puma-#         from puma.buurt b where gm_naam = 'Amsterdam';
+  gid  |               bu_naam               |  gm_naam  | steel_kg_min | steel_kg_max | copper_kg_min | copper_kg_max 
+-------+-------------------------------------+-----------+--------------+--------------+---------------+---------------
+  4254 | Kinkerbuurt                         | Amsterdam |      1925100 |      3385100 |         25840 |         25840
+  4255 | Van Lennepbuurt                     | Amsterdam |      2411600 |      4203200 |         31015 |         31015
+  4256 | Helmersbuurt                        | Amsterdam |      2453800 |      4167400 |         39190 |         39190
+  4257 | Overtoomse Sluis                    | Amsterdam |      2549600 |      4401200 |         37105 |         37105
+  4275 | De Punt                             | Amsterdam |      1550700 |      2599100 |         24045 |         24045
+  4292 | IJselbuurt                          | Amsterdam |      1603300 |      2806900 |         21075 |         21075
+  4236 | Burgwallen-Oude Zijde               | Amsterdam |      1712700 |      2912300 |         28375 |         28375
+  4237 | Burgwallen-Nieuwe Zijde             | Amsterdam |      1872200 |      3150200 |         29285 |         29285
+  4238 | Grachtengordel-West                 | Amsterdam |      2900300 |      4816700 |         63395 |         63395
+  4239 | Grachtengordel-Zuid                 | Amsterdam |      1715000 |      2842200 |         38400 |         38400
+  4240 | Nieuwmarkt/Lastage                  | Amsterdam |      3778300 |      6278300 |         61480 |         61480
+  4241 | Haarlemmerbuurt                     | Amsterdam |      3302900 |      5555700 |         53490 |         53490
+  4242 | Jordaan                             | Amsterdam |      7268200 |     12609400 |        105015 |        105015
+  4243 | De Weteringschans                   | Amsterdam |      2691500 |      4557100 |         49620 |         49620
+  4244 | Weesperbuurt/Plantage               | Amsterdam |      2622400 |      4384800 |         40760 |         40760
+  4245 | Oostelijke Eilanden/Kadijken        | Amsterdam |      4395000 |      7381000 |         70835 |         70835
+  4248 | Houthavens                          | Amsterdam |       635800 |      1073000 |          9085 |          9085
+  4249 | Spaarndammer- en Zeeheldenbuurt     | Amsterdam |      3419500 |      5844300 |         47350 |         47350
+  4246 | Westelijk Havengebied               | Amsterdam |        19000 |        32200 |           445 |           445
+  4247 | Bedrijventerrein Sloterdijk         | Amsterdam |       192300 |       331100 |          2495 |          2495
+  4250 | Staatsliedenbuurt                   | Amsterdam |      4279700 |      7442100 |         60070 |         60070
+  4251 | Centrale Markt                      | Amsterdam |       737400 |      1217400 |         12970 |         12970
+  4252 | Frederik Hendrikbuurt               | Amsterdam |      2801500 |      4829500 |         38080 |         38080
+  4253 | Da Costabuurt                       | Amsterdam |      1557600 |      2629200 |         22365 |         22365
+  4258 | Vondelbuurt                         | Amsterdam |       596000 |       973200 |         15055 |         15055
+  4259 | Sloterdijk                          | Amsterdam |       203700 |       325300 |          3100 |          3100
+  4260 | Landlust                            | Amsterdam |      5131600 |      9030000 |         62250 |         62250
+  4261 | Erasmuspark                         | Amsterdam |      1660100 |      2893700 |         20310 |         20310
+  4262 | De Kolenkit                         | Amsterdam |      2811900 |      4716700 |         44370 |         44370
+  4263 | De Krommert                         | Amsterdam |      3650700 |      6303900 |         50145 |         50145
+  4264 | Van Galenbuurt                      | Amsterdam |      1668800 |      2956800 |         18580 |         18580
+  4265 | Hoofdweg en omgeving                | Amsterdam |      3015100 |      5329500 |         35130 |         35130
+  4266 | Westindische buurt                  | Amsterdam |      1955200 |      3406800 |         24705 |         24705
+  4267 | Spieringhorn                        | Amsterdam |          600 |         1000 |            15 |            15
+  4268 | Slotermeer-Noordoost                | Amsterdam |      2259100 |      3936700 |         29500 |         29500
+  4269 | Slotermeer-Zuidwest                 | Amsterdam |      4454800 |      7594800 |         60790 |         60790
+  4270 | Geuzenveld                          | Amsterdam |      3596700 |      6007500 |         60345 |         60345
+  4271 | Eendracht                           | Amsterdam |       555200 |       928000 |         13120 |         13120
+  4272 | Lutkemeer en Ookmeer                | Amsterdam |       170100 |       290900 |          5700 |          5700
+  4273 | Osdorp-Oost                         | Amsterdam |      4923400 |      8157800 |         70350 |         70350
+  4274 | Osdorp-Midden                       | Amsterdam |      4290400 |      6920400 |         73775 |         73775
+  4276 | Middelveldsche Akerpolder en Sloten | Amsterdam |      3411800 |      5673400 |         85850 |         85850
+  4277 | Slotervaart                         | Amsterdam |      4619600 |      7777200 |         75850 |         75850
+  4278 | Overtoomse Veld                     | Amsterdam |      3162900 |      5079300 |         50085 |         50085
+  4279 | Westlandgracht                      | Amsterdam |      2685700 |      4277700 |         44470 |         44470
+  4280 | Sloten- en Riekerpolder             | Amsterdam |      3249300 |      5414100 |         81970 |         81970
+  4281 | Oude Pijp                           | Amsterdam |      5094000 |      8829200 |         73300 |         73300
+  4282 | Nieuwe Pijp                         | Amsterdam |      4076500 |      7098100 |         54140 |         54140
+  4283 | Diamantbuurt                        | Amsterdam |      2424500 |      4253700 |         30295 |         30295
+  4284 | Hoofddorppleinbuurt                 | Amsterdam |      3580100 |      6172100 |         44480 |         44480
+  4285 | Schinkelbuurt                       | Amsterdam |      1239800 |      2153800 |         16505 |         16505
+  4286 | Willemspark                         | Amsterdam |      1741600 |      2828400 |         47805 |         47805
+  4287 | Museumkwartier                      | Amsterdam |      3833400 |      6259800 |        105960 |        105960
+  4288 | Stadionbuurt                        | Amsterdam |      3778400 |      6358000 |         50845 |         50845
+  4289 | Apollobuurt                         | Amsterdam |      2675500 |      4231100 |         78265 |         78265
+  4290 | Duivelseiland                       | Amsterdam |       478500 |       822100 |          6885 |          6885
+  4291 | Scheldebuurt                        | Amsterdam |      4714900 |      7688900 |         83295 |         83295
+  4293 | Rijnbuurt                           | Amsterdam |      2783300 |      4894100 |         37295 |         37295
+  4294 | Station-Zuid WTC en omgeving        | Amsterdam |       445200 |       724800 |         11675 |         11675
+  4297 | Weesperzijde                        | Amsterdam |      1683500 |      2861100 |         27900 |         27900
+  4298 | Oosterparkbuurt                     | Amsterdam |      3393700 |      5888100 |         49370 |         49370
+  4295 | Buitenveldert-West                  | Amsterdam |      5055500 |      8353100 |         99330 |         99330
+  4296 | Buitenveldert-Oost                  | Amsterdam |      3205000 |      5360600 |         55005 |         55005
+  4299 | Dapperbuurt                         | Amsterdam |      2773700 |      4769700 |         42310 |         42310
+  4300 | Transvaalbuurt                      | Amsterdam |      2540100 |      4424100 |         38320 |         38320
+  4301 | Indische Buurt West                 | Amsterdam |      3578000 |      6248800 |         50295 |         50295
+  4302 | Indische Buurt Oost                 | Amsterdam |      2802800 |      4810400 |         43785 |         43785
+  4303 | Oostelijk Havengebied               | Amsterdam |      5938400 |      9379600 |        116985 |        116985
+  4304 | Zeeburgereiland/Nieuwe Diep         | Amsterdam |       296300 |       529900 |          4220 |          4220
+  4305 | IJburg West                         | Amsterdam |      3493000 |      5568600 |         91165 |         91165
+  4308 | Middenmeer                          | Amsterdam |      4278900 |      7222100 |         82870 |         82870
+  4306 | IJburg Zuid                         | Amsterdam |      1849500 |      2904300 |         43515 |         43515
+  4307 | Frankendael                         | Amsterdam |      3171600 |      5518400 |         47165 |         47165
+  4309 | Betondorp                           | Amsterdam |       993400 |      1776200 |         11975 |         11975
+  4310 | De Omval                            | Amsterdam |      1469300 |      2568500 |         18960 |         18960
+  4311 | IJburg Oost                         | Amsterdam |              |              |               |              
+  4312 | Volewijck                           | Amsterdam |      2570900 |      4554500 |         34715 |         34715
+  4313 | Ijplein/Vogelbuurt                  | Amsterdam |      2211900 |      3843100 |         35200 |         35200
+  4314 | Tuindorp Nieuwendam                 | Amsterdam |       946700 |      1686300 |         11705 |         11705
+  4315 | Tuindorp Buiksloot                  | Amsterdam |       526600 |       933800 |          9370 |          9370
+  4316 | Nieuwendammerdijk/Buiksloterdijk    | Amsterdam |       363700 |       618900 |          9610 |          9610
+  4317 | Tuindorp Oostzaan                   | Amsterdam |      2643700 |      4664500 |         44130 |         44130
+  4318 | Oostzanerwerf                       | Amsterdam |      2358200 |      3834200 |         48320 |         48320
+  4319 | Kadoelen                            | Amsterdam |       670100 |      1158500 |         14965 |         14965
+  4320 | Nieuwendam-Noord                    | Amsterdam |      3160500 |      5340100 |         50775 |         50775
+  4321 | Buikslotermeer                      | Amsterdam |      3909800 |      6481400 |         69185 |         69185
+  4322 | Banne Buiksloot                     | Amsterdam |      3381200 |      5734800 |         66020 |         66020
+  4323 | Buiksloterham                       | Amsterdam |       519000 |       869000 |         10175 |         10175
+  4324 | Nieuwendammerham                    | Amsterdam |        41900 |        71500 |          1020 |          1020
+  4325 | Waterland                           | Amsterdam |       466500 |       801300 |         12455 |         12455
+  4326 | Amstel III/Bullewijk                | Amsterdam |       217200 |       362000 |          2070 |          2070
+  4327 | Bijlmer-Centrum (D, F, H)           | Amsterdam |      6755700 |     11263700 |        106300 |        106300
+  4328 | Bijlmer-Oost (E, G, K)              | Amsterdam |      7836400 |     12740800 |        147955 |        147955
+  4329 | Nellestein                          | Amsterdam |      1178500 |      1850500 |         18140 |         18140
+  4330 | Holendrecht/Reigersbos              | Amsterdam |      4675600 |      8010800 |         89920 |         89920
+  4331 | Gein                                | Amsterdam |      2845000 |      4899000 |         54155 |         54155
+  4332 | Driemond                            | Amsterdam |       341200 |       590800 |          6500 |          6500
+ 12033 |                                     | Amsterdam |        50000 |        87200 |          1675 |          1675
+(98 rows)
