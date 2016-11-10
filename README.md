@@ -1,6 +1,7 @@
 # PUMA
 Prospecting the Urban Mines of Amsterdam
 
+Ontwikkeld in het kader van het project Prospecting the Urban Mines of Amsterdam [PUMA](http://www.ams-institute.org/solution/puma/) door Leiden University, Institute of Environmental Sciences; Delft University of Technology, Faculty of Architecture and the Built Environment; Metabolic Amsterdam & Waag Society.
 
 ### Kaart
 
