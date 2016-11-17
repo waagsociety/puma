@@ -1,0 +1,367 @@
+---
+---
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<title>PUMA &#124; Prospecting the Urban Mines of Amsterdam  </title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<link rel="stylesheet" href="{{ site.baseurl}}/style.css" />
+	<link rel="stylesheet" href="{{ site.baseurl}}/leaflet/leaflet.css" />
+	<script src="{{ site.baseurl}}/d3.v3.min.js"></script>
+	<script src="{{ site.baseurl}}/leaflet/leaflet.js"></script>
+</head>
+<body>
+	<div class="map" id="map1"></div>
+  <span id="close" class="close"></span>
+  <!--<span id="close-data" class="close-data"></span>-->
+  <div id="waag">
+        <a href="#52.3732,4.9003,16"><img src="{{ site.baseurl}}/images/waag.png" /></a>
+      </div>
+  <div id="box">
+    <div id="box-wrapper">
+      <div id="logo">
+          <div class="logo-wrapper">
+              <img class="logo-img" src="images/logo_puma_reverse.png">
+          </div>
+      </div>
+      <div id="info">
+        
+        <p>No circular economy without urban mines. How much copper and iron is contained in the residential buildings of Amsterdam?
+           The project "Prospecting the Urban Mines of Amsterdam" (PUMA) made an estimate.
+        </p>
+        <form>
+            <input class="info-button" type="button" value="More Info" onclick="window.location='info.html';"/> 
+        </form>
+      </div>
+      
+      
+      <div id="maps">
+      
+      
+      <form> 
+       <input class="map-button is-active" type="button" value="Copper min" name="button1" data-type="copper" data-min="1" data-max="10" data-url="http://54.93.88.148:8888/v2/puma_copper_min_13-16/{z}/{x}/{y}.png"> 
+       <input class="map-button" type="button" value="Copper max" name="button2" data-type="copper" data-min="1" data-max="10" data-url="http://54.93.88.148:8888/v2/puma_copper_max_13-16/{z}/{x}/{y}.png">
+       <input class="map-button" type="button" value="Steel min" name="button3"  data-type="steel" data-min="1" data-max="10" data-url="http://54.93.88.148:8888/v2/puma_steel_min_13-16/{z}/{x}/{y}.png">
+       <input class="map-button" type="button" value="Steel max" name="button4" data-type="steel" data-min="1" data-max="10" data-url="http://54.93.88.148:8888/v2/puma_steel_max_13-16/{z}/{x}/{y}.png">
+      </form>
+      
+      </div>
+      
+      <div id="legend">
+          <ul>
+            <li class="min"></li>
+            <li class="max"></li>
+          </ul>
+          <div data-type="copper" class="colorbar">kg/m</div>
+      </div>
+      
+     </div>
+    </div>
+  
+    <!-- <div id="data-box">
+      <div id="data">
+        <h2>Data</h2>
+        <table class="data-table">
+          <tr><td><h3>City</h3></td><td><span class="help" id="gemeente-help">(click on building for data)</span></td></tr>
+          <tr><td class="key">Name:</td><td class="value" id="admr-naam"></td></tr>
+          <tr><td class="key">Population:</td><td class="value" id="cbs-inwoners"></td></tr>
+          <tr><td class="key">Area:</td><td class="value" id="cbs-oppervlakte"></td></tr>
+          <tr><td><h3>Building</h3></td><td></td></tr>
+          <tr><td class="key">Constructed:</td><td class="value" id="pand-bouwjaar"></td></tr>
+          <tr><td class="key">Address:</td><td class="value" id="vbo-adres"></td></tr>
+          <tr><td class="key"></td><td class="value" id="vbo-postcode"></td></tr>
+          <tr><td class="key"></td><td class="value" id="vbo-plaats"></td></tr>
+          <tr><td class="key">Area:</td><td class="value" id="vbo-oppervlakte"></td></tr>
+          <tr><td class="key">Function:</td><td class="value" id="vbo-gebruiksdoel"></td></tr>
+        </table>
+      </div>
+      
+  </div>
+  -->
+  
+<!-- http://54.93.88.148:8888/#!/map/puma_copper_min_13-16 -->  
+<!-- http://54.93.88.148:8888/#!/map/puma_copper_max_13-16 -->
+<!-- http://54.93.88.148:8888/#!/map/puma_steel_min_13-16 -->
+<!-- http://54.93.88.148:8888/#!/map/puma_steel_max_13-16 -->
+
+<!-- tileUrl2 = "http://54.93.88.148:8888/v2/puma_copper_max_13-16/{z}/{x}/{y}.png";
+        tileUrl3 = "http://54.93.88.148:8888/v2/puma_steel_min_13-16/{z}/{x}/{y}.png";
+        tileUrl4 = "http://54.93.88.148:8888/v2/puma_steel_max_13-16/{z}/{x}/{y}.png"; -->
+
+
+	<script>
+    var disableHashChange = false,
+        map = L.map('map1');
+        
+        
+    !function(className){
+    
+        function spread(data) { return [].slice.call(data) }
+        
+        var buttons = spread(document.getElementsByClassName(className));
+        
+        var legend = document.querySelector('#legend')
+        var legendMin = legend.querySelector('.min')
+        var legendMax = legend.querySelector('.max')
+        var legendUnit = legend.querySelector('[data-type]')
+        
+        var buttonIndex = 0;
+        buttons.forEach(function(item, index){
+            if (item.classList.contains('is-active')) buttonIndex = index;
+        })
+                
+        var currentTarget = buttons.length && buttons[buttonIndex >= 0 ? buttonIndex : 0];   
+        setMapUrl(currentTarget);  
+        
+        addEventListener('click', function(event) {
+                                    
+            var target = event.target;
+            var isButton = target.classList.contains(className);
+            if (isButton) {
+          
+                setMapUrl(target);
+                buttons.forEach(function(button) {
+                    if (button === target) button.classList.add('is-active');
+                    else button.classList.remove('is-active');
+                })
+            
+                
+            }
+            
+            
+        })
+        
+        function setMapUrl(target) {
+            
+            var url = target.dataset.url;
+            var type = target.dataset.type;
+            var min = target.dataset.min;
+            var max = target.dataset.max;
+            
+            console.log(url, min, max, type, target)
+
+            L.tileLayer(url,{
+                attributionControl: false,
+                minZoom: 13,
+                maxZoom: 16
+            }).addTo(map);
+
+        }
+        
+        
+    }('map-button')
+            
+    function changeMapUrl(event) {
+        
+        console.log(event);
+        
+    }
+        
+    map.setMaxBounds([
+      [48, 0],
+      [57, 10]
+       
+    ]);
+
+    map.setView([52.3674, 4.915], 11);
+
+    map.on('moveend', function(e) {
+      var lat = roundLatLon(map.getCenter().lat);
+      var lon = roundLatLon(map.getCenter().lng);
+      var zoom = map.getZoom();
+
+      disableHashChange = true;
+      window.location.hash = [lat, lon, zoom].join(",");
+    });
+   
+         
+        
+
+		
+
+    
+
+    map.on('click', function(e) {
+      var lat = e.latlng.lat,
+          lon = e.latlng.lng;
+
+      var buildingUrl = "{{ site.api }}layers/bag.pand/objects?lat=" + lat.toFixed(4)
+           + "&lon=" + lon.toFixed(4) + "&per_page=1&radius=" + {{ site.radius }};
+
+      d3.json(buildingUrl, function(geojson) {
+
+        // Reset data:
+        d3.select("#admr-naam").html("");
+        d3.select("#cbs-oppervlakte").html("");
+        d3.select("#cbs-inwoners").html("");
+
+        d3.select("#pand-bouwjaar").html("");
+
+        d3.select("#vbo-adres").html("");
+        d3.select("#vbo-postcode").html("");
+        d3.select("#vbo-plaats").html("");
+        d3.select("#vbo-oppervlakte").html("");
+        d3.select("#vbo-gebruiksdoel").html("");
+
+        if (geojson && geojson.features && geojson.features.length > 0) {
+          var buildingData = geojson.features[0].properties.layers["bag.pand"].data;
+
+          d3.select("#pand-bouwjaar").html(buildingData.bouwjaar);
+
+          var admrUrl = "{{ site.api }}layers/admr/objects?contains=bag.pand." + buildingData.id
+              + "&admr::admn_level=3&geom=false&layer=cbs";
+
+          d3.json(admrUrl, function(geojson) {
+              if (geojson && geojson.features && geojson.features.length > 0) {
+                var admrData = geojson.features[0].properties.layers["admr"].data,
+                    cbsData = geojson.features[0].properties.layers["cbs"].data;
+
+                d3.select("#admr-naam").html(admrData.gemeentenaam);
+                d3.select("#cbs-oppervlakte").html(formatNumber(cbsData.opp_tot / 100) + " km&#178;");
+                d3.select("#cbs-inwoners").html(formatNumber(cbsData.aant_inw));
+              }
+          });
+
+          var addressUrl = "{{ site.api }}layers/bag.vbo/objects?bag.vbo::pand_ids=" + buildingData.id;
+
+          d3.json(addressUrl, function(geojson) {
+
+            if (geojson && geojson.features && geojson.features.length > 0) {
+              var addressData = geojson.features[0].properties.layers["bag.vbo"].data;
+
+              var purpose = "";
+              switch (addressData.gebruiksdoel) {
+              case "woonfunctie":
+                purpose = "House";
+                break;
+              case "gezondheidszorgfunctie":
+                purpose = "Healthcare";
+                break;
+              case "logiesfunctie":
+                purpose = "Hotel";
+                break;
+              case "industriefunctie":
+                purpose = "Industry";
+                break;
+              case "onderwijsfunctie":
+                purpose = "Education";
+                break;
+              case "sportfunctie":
+                purpose = "Sport";
+                break;
+              case "kantoorfunctie":
+                purpose = "Office";
+                break;
+              case "celfunctie":
+                purpose = "Detention";
+                break;
+              case "bijeenkomstfunctie":
+                purpose = "Public";
+                break;
+              case "winkelfunctie":
+                purpose = "Retail";
+                break;
+              case "overige gebruiksfunctie":
+                purpose = "Other";
+                break;
+              }
+
+              var addess = addressData.straat + " " + addressData.huisnummer
+
+              if (addressData.toevoeging) {
+                address += addressData.toevoeging;
+              }
+
+              d3.select("#vbo-adres").html(addess);
+              d3.select("#vbo-postcode").html(addressData.postcode);
+              d3.select("#vbo-plaats").html(addressData.woonplaats);
+              d3.select("#vbo-oppervlakte").html(formatNumber(addressData.oppervlakte) + " m&#178;");
+              d3.select("#vbo-gebruiksdoel").html(purpose);
+            }
+          });
+        }
+      });
+
+    });
+
+    d3.select("#close").on("click", function() {
+      var closed = d3.select(this).classed("closed");
+
+      d3.select("#box")
+          .classed("hidden", closed)
+          .transition()
+          .duration(150)
+          .style("opacity", closed ? 1 : 0)
+          .each("end", function() { d3.select(this).classed("hidden", !closed); });
+
+      d3.select(this).classed("closed", !closed);
+    });
+        
+        
+        
+        
+        d3.select("#close-data").on("click", function() {
+      var closed = d3.select(this).classed("closed-data");
+
+      d3.select("#data-box")
+          .classed("hidden", closed)
+          .transition()
+          .duration(150)
+          .style("opacity", closed ? 1 : 0)
+          .each("end", function() { d3.select(this).classed("hidden", !closed); });
+
+      d3.select(this).classed("closed-data", !closed);
+    });
+        
+        
+        
+
+    window.onhashchange = function() {
+      if (!disableHashChange) {
+        var hash = window.location.hash.split(",");;
+        if (hash.length == 3) {
+          var lat = parseFloat(hash[0].substring(1)), // Remove "#"
+              lon = parseFloat(hash[1]),
+              zoom = parseInt(hash[2]);
+
+          map.setView([lat, lon], zoom);
+        }
+      }
+      disableHashChange = false;
+    }
+
+    window.onhashchange();
+
+    function roundLatLon(l) {
+      return Math.round(l * 10000) / 10000;
+    }
+
+    function formatNumber(x) {
+      x = x.toString();
+      var pattern = /(-?\d+)(\d{3})/;
+      while (pattern.test(x))
+        x = x.replace(pattern, "$1,$2");
+      return x;
+    }
+
+	</script>
+
+	<!-- Piwik -->
+	<script type="text/javascript">
+    var _paq = _paq || [];
+	  _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//194.145.201.185/";
+      _paq.push(['setTrackerUrl', u+'piwik.php']);
+      _paq.push(['setSiteId', 2]);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  <noscript><p><img src="//194.145.201.185/piwik.php?idsite=2" style="border:0;" alt="" /></p></noscript>
+  <!-- End Piwik Code -->
+
+</body>
+</html>
