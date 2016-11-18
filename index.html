@@ -31,7 +31,7 @@
            The project "Prospecting the Urban Mines of Amsterdam" (PUMA) made an estimate.
         </p>
         <form>
-            <input class="info-button" type="button" value="More Info" onclick="window.location='info.html';"/> 
+            <input class="info-button" type="button" value="Project information" onclick="window.location='info.html';"/> 
         </form>
       </div>
       
@@ -40,10 +40,10 @@
       
       
       <form> 
-       <input class="map-button is-active" type="button" value="Copper min" name="button1" data-type="copper" data-min="1" data-max="10" data-url="http://54.93.88.148:8888/v2/puma_copper_min_13-16/{z}/{x}/{y}.png"> 
-       <input class="map-button" type="button" value="Copper max" name="button2" data-type="copper" data-min="1" data-max="10" data-url="http://54.93.88.148:8888/v2/puma_copper_max_13-16/{z}/{x}/{y}.png">
-       <input class="map-button" type="button" value="Steel min" name="button3"  data-type="steel" data-min="1" data-max="10" data-url="http://54.93.88.148:8888/v2/puma_steel_min_13-16/{z}/{x}/{y}.png">
-       <input class="map-button" type="button" value="Steel max" name="button4" data-type="steel" data-min="1" data-max="10" data-url="http://54.93.88.148:8888/v2/puma_steel_max_13-16/{z}/{x}/{y}.png">
+       <input class="map-button is-active" type="button" value="Copper min" name="button1" data-type="copper" data-min="0" data-max="0.5" data-url="http://54.93.88.148:8888/v2/puma_copper_min_13-16/{z}/{x}/{y}.png"> 
+       <input class="map-button" type="button" value="Copper max" name="button2" data-type="copper" data-min="0" data-max="0.5" data-url="http://54.93.88.148:8888/v2/puma_copper_max_13-16/{z}/{x}/{y}.png">
+       <input class="map-button" type="button" value="Steel min" name="button3"  data-type="steel" data-min="0" data-max="150" data-url="http://54.93.88.148:8888/v2/puma_steel_min_13-16/{z}/{x}/{y}.png">
+       <input class="map-button" type="button" value="Steel max" name="button4" data-type="steel" data-min="0" data-max="150" data-url="http://54.93.88.148:8888/v2/puma_steel_max_13-16/{z}/{x}/{y}.png">
       </form>
       
       </div>
@@ -53,7 +53,7 @@
             <li class="min"></li>
             <li class="max"></li>
           </ul>
-          <div data-type="copper" class="colorbar">kg/m</div>
+          <div data-type="copper" class="colorbar">kg/m&#178;</div>
       </div>
       
      </div>
@@ -80,15 +80,6 @@
   </div>
   -->
   
-<!-- http://54.93.88.148:8888/#!/map/puma_copper_min_13-16 -->  
-<!-- http://54.93.88.148:8888/#!/map/puma_copper_max_13-16 -->
-<!-- http://54.93.88.148:8888/#!/map/puma_steel_min_13-16 -->
-<!-- http://54.93.88.148:8888/#!/map/puma_steel_max_13-16 -->
-
-<!-- tileUrl2 = "http://54.93.88.148:8888/v2/puma_copper_max_13-16/{z}/{x}/{y}.png";
-        tileUrl3 = "http://54.93.88.148:8888/v2/puma_steel_min_13-16/{z}/{x}/{y}.png";
-        tileUrl4 = "http://54.93.88.148:8888/v2/puma_steel_max_13-16/{z}/{x}/{y}.png"; -->
-
 
 	<script>
     var disableHashChange = false,
@@ -139,7 +130,11 @@
             var min = target.dataset.min;
             var max = target.dataset.max;
             
-            console.log(url, min, max, type, target)
+            console.log('ik heb geklikt, rakker', url, min, max, type, target)
+            
+            legendMin.textContent = min
+            legendMax.textContent = max
+            legendUnit.dataset.type = type
 
             L.tileLayer(url,{
                 attributionControl: false,
@@ -151,12 +146,7 @@
         
         
     }('map-button')
-            
-    function changeMapUrl(event) {
-        
-        console.log(event);
-        
-    }
+
         
     map.setMaxBounds([
       [48, 0],

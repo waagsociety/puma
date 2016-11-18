@@ -1,56 +1,79 @@
-# PUMA
-Prospecting the Urban Mines of Amsterdam
+# Buildings in the Netherlands by year of construction
 
-Ontwikkeld in het kader van het project Prospecting the Urban Mines of Amsterdam [PUMA](http://www.ams-institute.org/solution/puma/) door Leiden University, Institute of Environmental Sciences; Delft University of Technology, Faculty of Architecture and the Built Environment; Metabolic Amsterdam & Waag Society.
+View map on http://code.waag.org/buildings.
 
-### Kaart
+Map showing all 9,866,539 <a href="http://www.kadaster.nl/web/file?uuid=25da4675-fc9c-47a6-8039-1af04c142965&owner=23cbe925-35ce-4a72-ac8c-a33a0c19ae1e&contentid=2585">buildings</a> in the Netherlands, shaded according to year of construction. Data from <a href="http://www.kadaster.nl/bag">BAG</a>, via <a href="http://citysdk.waag.org/">CitySDK</a>. Map made with <a href="http://www.mapbox.com/tilemill/">TileMill</a> by <a href="mailto:bert@waag.org">Bert Spaan</a>, <a href="http://waag.org/">Waag Society</a>, inspired by <a href="http://bklynr.com/block-by-block-brooklyns-past-and-present/">BKLYNR</a>.
 
-De live versie is beschikbaar op: [code.waag.org/puma](http://code.waag.org/puma) en is gebaseerd op de [gebouwenkaart](code.waag.org/puma).
+[![](high-res/smaller/haarlem.png)](http://code.waag.org/buildings)
 
+# License
 
-### Berekening
+## Software - scripts in this repository
 
-Voor de inschatting van het gewicht aan staal en koper wordt gebruik gemaakt van het model zoals beschreven in
-'[PUMA – from building to urban mine (2016)](http://amsdatahub.waag.org/browser#search=kou&type=paper&item=39286)'
-Van Koutamanis et al.
+MIT
 
-Dit stappenplan resulteert per adres (vbo) in een ordinale score A:
+## Map - building map, screenshots, high-res exports
 
-* A(s) = score staal
-* A(k) = score koper
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
 
-Per adres (vbo) wordt hier een minimum en maximumwaarde in kilogrammen aan toegekend:
+# Make a similar map yourself
 
-* Pa(s-) = Puma minimum kilo staal per adres
-* Pa(s+) = Puma maximum kilo staal per adres
-* Pa(k-) = Puma minimum kilo koper per adres
-* Pa(k+) = Puma maximum kilo koper per adres
+The map is made with open data and open source software only. This section of the README explains how to get the data, create the map and [export](../../tree/gh-pages/sections) high-res PNG and PDF files.
 
-Deze waarden per adres (vbo) worden voor de kaart opgeteld per gebouw (pand) en gedeeld door de voetafdruk (oppervlakte) van het gebouw (pand), wat leidt tot:
+## Download and import BAG data
 
-* Pg(s-) = Puma minimum kilo staal/pand
-* Pg(s+) = Puma maximum kilo staal/pand
-* Pg(k-) = Puma minimum kilo koper/pand
-* Pg(k+) = Puma maximum kilo koper/pand
+Install PostgreSQL and PostGIS, download data from [NLExtract](http://nlextract.nl/) and import into database `bag`. Details can be found in [NLExtract's documentation](https://nlextract.readthedocs.org/en/latest/bagextract.html).
 
+## Create buildings table
 
-### Data
+To create a map with buildings by year of construction (or area and function), execute the following SQL:
 
-De gebruikte data komen uit:
+```sql
+-- Aggregate mode function, to compute modal area and function
+-- From: http://wiki.postgresql.org/wiki/Aggregate_Mode
+CREATE OR REPLACE FUNCTION _final_mode(anyarray)
+  RETURNS anyelement AS
+$BODY$
+    SELECT a
+    FROM unnest($1) a
+    GROUP BY 1
+    ORDER BY COUNT(1) DESC, 1
+    LIMIT 1;
+$BODY$
+LANGUAGE 'sql' IMMUTABLE;
 
-* [BAG](http://amsdatahub.waag.org/browser#search=bag&item=39915)
-* [AHN](http://amsdatahub.waag.org/browser#search=ahn&item=39371)
+CREATE AGGREGATE mode(anyelement) (
+  SFUNC=array_append, --Function to call for each row. Just builds the array
+  STYPE=anyarray,
+  FINALFUNC=_final_mode, --Function to call after everything has been added to array
+  INITCOND='{}' --Initialize an empty array when starting
+);
 
-Er zijn drie bestanden die de berekening en resultaat voor Amsterdam geven:
+CREATE SCHEMA tilemill;
 
-Scores én kilogrammen per adres voor Amsterdam:
+CREATE TABLE tilemill.buildings AS
+SELECT
+  p.identificatie::bigint, bouwjaar::int,
+  ST_Transform(p.geovlak, 4326) AS geom,
+  round(mode(oppervlakteverblijfsobject)) AS oppervlakte,
+  mode(vg.gebruiksdoelverblijfsobject::text) AS gebruiksdoel
+FROM verblijfsobjectactueelbestaand v
+JOIN verblijfsobjectpandactueel vp
+  ON vp.identificatie = v.identificatie
+JOIN pandactueelbestaand p
+  ON vp.gerelateerdpand = p.identificatie
+JOIN verblijfsobjectgebruiksdoelactueel vg
+  ON v.identificatie = vg.identificatie
+GROUP BY
+  p.identificatie, bouwjaar, p.geovlak;
 
-* [puma adressen ams.csv](/data/puma_adressen_ams.csv)
+CREATE INDEX buildings_geom_idx
+  ON tilemill.buildings
+  USING gist (geom);
+```
 
-Oppervlakte (voetafdruk) en kilogrammen per pand (gevisualisseerde data):
+## Create TileMill project and map tiles
 
-* [puma panden ams.csv](/data/puma_panden_ams.csv)
+Install [TileMill](https://www.mapbox.com/tilemill/), copy the contents of the `tilemill` to your local TileMill projects directory (usually `~/Documents/MapBox/project`), or create a symbolic link. The TileMill project file connects with PostgreSQL using user `postgres` and password `postgres`. Edit `project.mml` to change user and password.
 
-Totaal kilogrammen per stadsdeel (alleen voor Amsterdam):
-
-* [puma buurt ams.txt](/data/puma_buurt_ams.txt)
+A script to export high-res images is available in the [`sections`](../../tree/gh-pages/sections) directory of this repository.

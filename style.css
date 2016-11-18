@@ -242,20 +242,20 @@ h3 {
   height: 8px;
 }
 
-.copper{
-   background: #003fff;
-background: -moz-linear-gradient(left, #003fff 0%, #00ffc1 72%); 
-background: -webkit-linear-gradient(left, #003fff 0%,#00ffc1 72%); 
-background: linear-gradient(to right, #003fff 0%,#00ffc1 72%); 
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#003fff', endColorstr='#00ffc1',GradientType=1 ); 
+div[data-type=copper] {
+    background: #003fff;
+    background: -moz-linear-gradient(left, #003fff 0%, #00ffc1 72%); 
+    background: -webkit-linear-gradient(left, #003fff 0%,#00ffc1 72%); 
+    background: linear-gradient(to right, #003fff 0%,#00ffc1 72%); 
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#003fff', endColorstr='#00ffc1',GradientType=1 ); 
 }
 
-.steel{
-background: #ff0200;
-background: -moz-linear-gradient(left, #ff0200 0%, #ff3b00 25%, #ff7b00 50%, #ffc700 75%, #fff600 100%); 
-background: -webkit-linear-gradient(left, #ff0200 0%,#ff3b00 25%,#ff7b00 50%,#ffc700 75%,#fff600 100%);
-background: linear-gradient(to right, #ff0200 0%,#ff3b00 25%,#ff7b00 50%,#ffc700 75%,#fff600 100%);
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff0200', endColorstr='#fff600',GradientType=1 ); 
+div[data-type=steel] {
+    background: #ff0200;
+    background: -moz-linear-gradient(left, #ff0200 0%, #ff3b00 25%, #ff7b00 50%, #ffc700 75%, #fff600 100%); 
+    background: -webkit-linear-gradient(left, #ff0200 0%,#ff3b00 25%,#ff7b00 50%,#ffc700 75%,#fff600 100%);
+    background: linear-gradient(to right, #ff0200 0%,#ff3b00 25%,#ff7b00 50%,#ffc700 75%,#fff600 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff0200', endColorstr='#fff600',GradientType=1 ); 
 }
 
 #data-box{
