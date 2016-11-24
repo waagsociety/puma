@@ -1,4 +1,4 @@
-baseurl: /PUMA
+baseurl: /puma
 exclude: ['README.md', 'sections', 'tilemill']
 
 api: http://api.citysdk.waag.org/
