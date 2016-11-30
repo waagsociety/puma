@@ -26,13 +26,19 @@
           </div>
       </div>
       <div id="info">
+       
+       <h3>Prospecting the Urban Mines of Amsterdam</h3>
         
-        <p>No circular economy without urban mines. How much copper and iron is contained in the residential buildings of Amsterdam?
-           The project "Prospecting the Urban Mines of Amsterdam" (PUMA) made an estimate.
+        <p> 
+            PUMA estimates the concentration of metals in residential buildings with open
+            data. This creates a map from the perspective of a future circular economy—because “Cities are the
+            mines of the future” (Jane Jacobs). [ https://www.nae.edu/Publications/Bridge/43180/47182.aspx ] For
+            each metal, two estimates are visualized. The minimum scenario shows the least amount of metal to be
+            expected, while the maximum scenario shows the opposite.
         </p>
-        <form>
-            <input class="info-button" type="button" value="Project information" onclick="window.location='info.html';"/> 
-        </form>
+        
+        <p><a class="info-button" href="info.html">More...</a></p>
+        
       </div>
       
       
@@ -40,16 +46,16 @@
       
       
       <form> 
-       <input class="map-button is-active" type="button" value="Copper minimum scenario" name="button1" data-type="copper" data-min="0" data-max="0.5" data-url="http://54.93.88.148:8888/v2/puma_copper_min_13-16/{z}/{x}/{y}.png"> 
-       <input class="map-button" type="button" value="Copper maximum scenario" name="button2" data-type="copper" data-min="0" data-max="0.5" data-url="http://54.93.88.148:8888/v2/puma_copper_max_13-16/{z}/{x}/{y}.png">
-       <input class="map-button" type="button" value="Steel minimum scenario" name="button3"  data-type="steel" data-min="0" data-max="150" data-url="http://54.93.88.148:8888/v2/puma_steel_min_13-16/{z}/{x}/{y}.png">
-       <input class="map-button" type="button" value="Steel maximum scenario" name="button4" data-type="steel" data-min="0" data-max="150" data-url="http://54.93.88.148:8888/v2/puma_steel_max_13-16/{z}/{x}/{y}.png">
+       <input class="map-button is-active" type="button" value="Copper minimum scenario" name="button1" data-type="copper" data-min="0" data-max="0.5" data-url="http://tiles.waag.org/v2/puma_copper_min/{z}/{x}/{y}.png"> 
+       <input class="map-button" type="button" value="Copper maximum scenario" name="button2" data-type="copper" data-min="0" data-max="0.5" data-url="http://tiles.waag.org/v2/puma_copper_max/{z}/{x}/{y}.png">
+       <input class="map-button" type="button" value="Steel minimum scenario" name="button3"  data-type="steel" data-min="0" data-max="150" data-url="http://tiles.waag.org/v2/puma_steel_min/{z}/{x}/{y}.png">
+       <input class="map-button" type="button" value="Steel maximum scenario" name="button4" data-type="steel" data-min="0" data-max="150" data-url="http://tiles.waag.org/v2/puma_steel_max/{z}/{x}/{y}.png">
       </form>
       
       </div>
       
       <div id="legend">
-         <p>kg/m&#178;</p>
+         <p>kilogram per square meter</p>
           <ul>
             <li class="min"></li>
             <li class="max"></li>
@@ -140,7 +146,7 @@
 
             L.tileLayer(url,{
                 attributionControl: false,
-                minZoom: 13,
+                minZoom: 8,
                 maxZoom: 16
             }).addTo(map);
 
