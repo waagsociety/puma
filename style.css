@@ -54,7 +54,7 @@ p{
 
 html, body, #map,
 a, a:visited, a:hover {
-  color: rgb(68, 68, 68);
+  color: rgb(232, 232, 232);
 }
 
 .color1  { background-color: #A50026; }
@@ -180,10 +180,6 @@ h4 {
     line-height: 0.4em;
 }
 
-.info-button:hover{
-    
-    font-size: 1.1em;
-}
 
 #info-box{
     color: #fff;
