@@ -12,6 +12,9 @@ Calculated data for Amsterdam are in [/data](/data).
 
 Code forked from [Buildings Map](https://github.com/waagsociety/buildings). 
 
+# Credits
+Funded by <a class="info-button" href="http://www.ams-institute.org/home/" target="_blank">AMS Institute</a> the PUMA project is a joint research effort of <a class="info-button" href="http://www.bk.tudelft.nl/" target="_blank">TU Delft</a>, <a class="info-button" href="https://www.waag.org/en" target="_blank">Waag Society</a>, <a class="info-button" href="https://www.universiteitleiden.nl/en/science/environmental-sciences" target="_blank">CML Leiden University</a> and  <a class="info-button" href="http://www.metabolic.nl/" target="_blank">Metabolic.</a>
+
 # License
 
 ## Software - scripts in this repository
