@@ -8,7 +8,7 @@ expected, while the maximum scenario shows the opposite.
 # Data
 The map and calculations are based on open data and a calculation based on a method by Koutamanis et al (link will be added). Used data sets are <a class="info-button" href="http://www.kadaster.nl/bag" target="_blank">BAG</a> and <a class="info-button" href="http://www.ahn.nl/pagina/open-data.html" target="_blank">AHN</a>.
 
-Calculated data for Amsterdam are in [/data](/data).
+Calculated data for Amsterdam are in [/data](/data). See the [readme file](/data/readme.md) in the data folder.
 
 Code forked from [Buildings Map](https://github.com/waagsociety/buildings). 
 
