@@ -5,14 +5,14 @@ View map on http://code.waag.org/puma.
 Map showing all buildings in the Netherlands, shaded according to the estimated concentration of metals in residential buildings. with open data. This creates a map from the perspective of a future circular economy—because <a href="https://www.nae.edu/Publications/Bridge/43180/47182.aspx" target="_blank">“Cities are the mines of the future”</a> (Jane Jacobs). For each metal, two estimates are visualized. The minimum scenario shows the least amount of metal to be
 expected, while the maximum scenario shows the opposite.
 
-# Data
-The map and calculations are based on open data and a calculation based on a method by Koutamanis et al (link will be added). Used data sets are <a class="info-button" href="http://www.kadaster.nl/bag" target="_blank">BAG</a> and <a class="info-button" href="http://www.ahn.nl/pagina/open-data.html" target="_blank">AHN</a>.
+## Data and code
+Map and metal density based on open data and a calculation based on a method by [Koutamanis et al.](/data/PUMA_­from_building_to_urban_mine.pdf). Used data sets are <a class="info-button" href="http://www.kadaster.nl/bag" target="_blank">BAG</a> and <a class="info-button" href="http://www.ahn.nl/pagina/open-data.html" target="_blank">AHN</a>.
 
 Calculated data for Amsterdam are in [/data](/data). See the [readme file](/data/readme.md) in the data folder.
 
-Code forked from [Buildings Map](https://github.com/waagsociety/buildings). 
+Code forked from [Buildings Map](https://github.com/waagsociety/buildings). Step by step instruction to create your own map can be found there.
 
-# Credits
+## Credits
 Funded by <a class="info-button" href="http://www.ams-institute.org/home/" target="_blank">AMS Institute</a> the PUMA project is a joint research effort of <a class="info-button" href="http://www.bk.tudelft.nl/" target="_blank">TU Delft</a>, <a class="info-button" href="https://www.waag.org/en" target="_blank">Waag Society</a>, <a class="info-button" href="https://www.universiteitleiden.nl/en/science/environmental-sciences" target="_blank">CML Leiden University</a> and  <a class="info-button" href="http://www.metabolic.nl/" target="_blank">Metabolic.</a>
 
 # License
